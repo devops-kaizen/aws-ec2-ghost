@@ -1,0 +1,53 @@
+---
+- name: Set up Ghost CMS with Docker
+  hosts: ghost-machine
+  become: yes
+  vars:
+    ghost_container_name: some-ghost  # Name of the Ghost container
+    ghost_volume_name: some-ghost-data  # Name of the Docker volume for Ghost CMS data
+    ghost_network_name: ghost_network  # Name of the Docker network
+    ghost_port_mapping: "3001:2368"  # Port mapping from host to container
+    ghost_image: ghost:latest  # Docker image for Ghost CMS
+    ghost_env:
+      NODE_ENV: development  # Environment variable for the container
+      database__connection__filename: /var/lib/ghost/content/data/ghost.db  # Database connection filename
+
+  tasks:
+    # - name: Ensure Docker is installed
+    #   apt:
+    #     name: docker.io
+    #     state: present
+    #   become: yes
+
+    # - name: Install Docker SDK for Python
+    #   pip:
+    #     name: docker
+    #     state: present
+    #   become: yes
+
+    - name: Create a Docker network
+      docker_network:
+        name: "{{ ghost_network_name }}"
+        state: present  # Ensure the network exists
+
+    - name: Create Docker volume for Ghost CMS data
+      docker_volume:
+        name: "{{ ghost_volume_name }}"
+        state: present  # Ensure the volume exists
+
+    - name: Pull the Ghost image
+      docker_image:
+        name: "{{ ghost_image }}"
+        source: pull  # Ensure the latest Ghost image is pulled
+
+    - name: Run the Ghost CMS container
+      docker_container:
+        name: "{{ ghost_container_name }}"
+        image: "{{ ghost_image }}"
+        state: started
+        restart_policy: always  # Ensure the container restarts on failure
+        env: "{{ ghost_env }}"  # Set the environment variables for the container
+        published_ports:
+          - "2368:2368"  # Map host port to container port
+        volumes:
+          - "{{ ghost_volume_name }}:/var/lib/ghost/content"  # Mount the volume for persistent data
