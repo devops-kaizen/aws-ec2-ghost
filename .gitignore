@@ -1,0 +1,7 @@
+AWS_root_key.csv
+ghost_server_key
+ghost_server_key.pub
+auth/*
+ansible/vars.yml
+terraform/.terraform*
+terraform/*tfstate
