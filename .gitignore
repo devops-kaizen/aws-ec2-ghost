@@ -4,4 +4,5 @@ ghost_server_key.pub
 auth/*
 ansible/vars.yml
 terraform/.terraform*
-terraform/*tfstate
+terraform/*tfstate*
+scripts/backup/*

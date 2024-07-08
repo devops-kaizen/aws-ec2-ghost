@@ -6,7 +6,7 @@
     ghost_container_name: some-ghost  # Name of the Ghost container
     ghost_volume_name: some-ghost-data  # Name of the Docker volume for Ghost CMS data
     ghost_network_name: ghost_network  # Name of the Docker network
-    ghost_port_mapping: "3001:2368"  # Port mapping from host to container
+    ghost_port_mapping: "2368:2368"  # Port mapping from host to container
     ghost_image: ghost:latest  # Docker image for Ghost CMS
     ghost_env:
       NODE_ENV: development  # Environment variable for the container

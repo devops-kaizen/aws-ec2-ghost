@@ -2,13 +2,13 @@ provider "aws" {
   region = "eu-north-1"
 }
 
-resource "aws_key_pair" "deployer" {
-  key_name   = "ghost_server_key"
-  public_key = file("../auth/ghost_server_key.pub")
+resource "aws_key_pair" "deployer_1" {
+  key_name   = "ghost_server_key_1"
+  public_key = file("../auth/ghost_server_key_1.pub")
 }
 
-resource "aws_security_group" "ghost_sg" {
-  name        = "ghost_sg"
+resource "aws_security_group" "ghost_sg_1" {
+  name        = "ghost_sg_1"
   description = "Security group for Ghost server"
 
   ingress {
@@ -43,11 +43,11 @@ resource "aws_security_group" "ghost_sg" {
 resource "aws_instance" "app_server" {
   ami           = "ami-07c8c1b18ca66bb07"
   instance_type = "t3.micro"
-  key_name      = aws_key_pair.deployer.key_name
+  key_name      = aws_key_pair.deployer_1.key_name
 
   associate_public_ip_address = true
 
-  vpc_security_group_ids = [aws_security_group.ghost_sg.id]
+  vpc_security_group_ids = [aws_security_group.ghost_sg_1.id]
 
   tags = {
     Name = "GhostServer"
