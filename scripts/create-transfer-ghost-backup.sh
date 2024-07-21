@@ -1,3 +1,4 @@
+# create-transfer-ghost-backup.sh file
 #!/bin/bash
 
 # Define variables

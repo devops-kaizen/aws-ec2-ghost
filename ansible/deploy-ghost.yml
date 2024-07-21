@@ -1,17 +1,9 @@
 ---
 - name: Set up Ghost CMS with Docker
-  hosts: ghost-machine
+  hosts: ranchimall
   become: yes
-  vars:
-    ghost_container_name: some-ghost  # Name of the Ghost container
-    ghost_volume_name: some-ghost-data  # Name of the Docker volume for Ghost CMS data
-    ghost_network_name: ghost_network  # Name of the Docker network
-    ghost_port_mapping: "2368:2368"  # Port mapping from host to container
-    ghost_image: ghost:latest  # Docker image for Ghost CMS
-    ghost_env:
-      NODE_ENV: development  # Environment variable for the container
-      database__connection__filename: /var/lib/ghost/content/data/ghost.db  # Database connection filename
-
+  vars_files:
+    - vars.yml
   tasks:
     # - name: Ensure Docker is installed
     #   apt:
@@ -40,6 +32,12 @@
         name: "{{ ghost_image }}"
         source: pull  # Ensure the latest Ghost image is pulled
 
+    - name: Remove existing Ghost CMS container if it exists
+      docker_container:
+        name: "{{ ghost_container_name }}"
+        state: absent
+        force_kill: yes
+
     - name: Run the Ghost CMS container
       docker_container:
         name: "{{ ghost_container_name }}"
@@ -48,6 +46,6 @@
         restart_policy: always  # Ensure the container restarts on failure
         env: "{{ ghost_env }}"  # Set the environment variables for the container
         published_ports:
-          - "2368:2368"  # Map host port to container port
+          - "{{ ghost_port_mapping }}"  # Map host port to container port
         volumes:
           - "{{ ghost_volume_name }}:/var/lib/ghost/content"  # Mount the volume for persistent data

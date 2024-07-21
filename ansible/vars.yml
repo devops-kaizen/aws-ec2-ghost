@@ -8,7 +8,7 @@ volume_container_path: /data
 # ghost vars.yml
 ghost_container_name: some-ghost  # Name of the Ghost container
 ghost_volume_name: some-ghost-data  # Name of the Docker volume for Ghost CMS data
-ghost_network_name: ghost_network  # Name of the Docker network
+ghost_network_name: ghost-network  # Name of the Docker network
 ghost_port_mapping: "2368:2368"  # Port mapping from host to container (format host_port:container_port)
 ghost_image: ghost  # Docker image for Ghost CMS
 ghost_env:
