@@ -1,2 +1,5 @@
 [ghost-machine]
 13.60.19.244 ansible_user=ubuntu ansible_ssh_private_key_file=../auth/ghost_server_key_1
+
+[ranchimall]
+feynman.ranchimall.net ansible_user=vivek 
