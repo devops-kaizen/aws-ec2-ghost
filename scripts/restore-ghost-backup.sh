@@ -60,6 +60,7 @@ docker run -d \
   --name $CONTAINER_NAME \
   -e NODE_ENV=development \
   -e database__connection__filename='/var/lib/ghost/content/data/ghost.db' \
+  -e url=http://blog.vivekteega.com \
   -p 2368:2368 \
   -v $VOLUME_NAME:/var/lib/ghost/content \
   ghost
