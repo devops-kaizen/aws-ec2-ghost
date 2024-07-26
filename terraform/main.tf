@@ -40,7 +40,7 @@ resource "aws_security_group" "ghost_sg_1" {
   }
 }
 
-resource "aws_instance" "app_server" {
+resource "aws_instance" "ghost_server" {
   ami           = "ami-07c8c1b18ca66bb07"
   instance_type = "t3.micro"
   key_name      = aws_key_pair.deployer_1.key_name
@@ -54,6 +54,6 @@ resource "aws_instance" "app_server" {
   }
 }
 
-output "instance_ip" {
-  value = aws_instance.app_server.public_ip
+output "ghost_instance_ip" {
+  value = aws_instance.ghost_server.public_ip
 }
